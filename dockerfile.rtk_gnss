@@ -1,0 +1,18 @@
+ARG BASE_IMAGE
+ARG ROS_PACKAGE
+ARG SEPARATE
+ARG ROS_DISTRO
+FROM ${BASE_IMAGE} as base
+
+SHELL [ "/bin/bash","-c" ]
+
+# rtk-gnss
+# https://qiita.com/porizou1/items/87375394a6445952b9e9
+RUN mkdir -p ~/ros2_ws/src \
+  && cd ~/ros2_ws/src \
+  && git clone -b ros2 https://github.com/KumarRobotics/ublox.git \
+  && apt update && apt install -y ros-${ROS_DISTRO}-ublox
+# 
+# git clone https://github.com/ros-drivers/nmea_navsat_driver -b ros2 \ 
+
+CMD [ "echo 'Require build action'" ]

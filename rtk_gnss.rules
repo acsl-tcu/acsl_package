@@ -1,0 +1,5 @@
+# RTK-GNSS colcon build
+# Bus 004 Device 012: ID 1546:0502 U-Blox AG C099; ZED-F9P
+# Bus 004 Device 013: ID 1546:0503 U-Blox AG C099; ODIN-W2
+# Bus 004 Device 014: ID 1546:01a9 U-Blox AG u-blox GNSS receiver
+KERNEL=="ttyACM*",ATTRS{idVendor}=="1546",ATTRS{idProduct}=="01a9",  MODE="666",SYMLINK+="ttyUSB-ublox"

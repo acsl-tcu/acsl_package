@@ -1,0 +1,7 @@
+nmea_navsat_driver:
+  ros__parameters:
+    port: "/dev/ttyUSB-ublox"
+    baud: 230400
+    frame_id: "gps"
+    time_ref_source: "gps"
+    useRMC: False
