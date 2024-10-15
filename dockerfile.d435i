@@ -1,0 +1,77 @@
+ARG BASE_IMAGE
+ARG ROS_PACKAGE
+ARG ROS_DISTRO
+ARG SEPARATE
+FROM ${BASE_IMAGE} as base
+
+############################################################################################
+
+# Install of Librealsense 
+# ARGUMENT
+# 	REALSENSE_BASE		Base image
+# 	LIBRS_VERSION	Version of librealsense to install
+# REFERENCE URL	https://github.com/IntelRealSense/librealsense/blob/master/scripts/Docker/Dockerfile
+#################################
+
+#################################
+#   Librealsense Builder Stage  #
+#################################
+# librealsense ARGUMENT
+# https://github.com/IntelRealSense/librealsense/releases
+FROM base as librealsense-builder
+SHELL [ "/bin/bash","-c" ]
+
+# raspberry pi では j8, jetson　では j12  = core数 x 2 が一般的だが、 raspberry pi 5ではフリーズするのでj4くらいが良い
+#  ./scripts/patch-realsense-ubuntu-lts-hwe.sh  : cmake 時に　-DFORCE_RSUSB_BACKEND=true　を追加で必要ない
+# https://github.com/IntelRealSense/realsense-ros/issues/2816
+
+# librealsense
+#WORKDIR /usr/src
+# RUN mkdir -p /etc/apt/keyrings\
+#   && curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | tee /etc/apt/keyrings/librealsense.pgp > /dev/null \
+#   && echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsense.intel.com/Debian/apt-repo `lsb_release -cs` main" | tee /etc/apt/sources.list.d/librealsense.list\
+#   && apt-get update\
+#   && apt-get install -y librealsense2-dkms librealsense2-utils librealsense2-dev librealsense2-dbg
+
+RUN apt update &&  apt install ros-humble-librealsense2*\
+  && apt install -y ros-humble-realsense2-*
+
+
+
+# RUN mkdir -p /etc/apt/keyrings \
+#   && curl -sSf https://librealsense.intel.com/Debian/librealsense.pgp | tee /etc/apt/keyrings/librealsense.pgp > /dev/null
+
+# RUN echo "deb [signed-by=/etc/apt/keyrings/librealsense.pgp] https://librealsense.intel.com/Debian/apt-repo `lsb_release -cs` main" |  tee /etc/apt/sources.list.d/librealsense.list \
+# RUN apt-get update && sudo apt-get -y upgrade && sudo apt-get dist-upgrade -y \
+#   && apt-get install -y libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev\
+#   && apt-get install -y libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev at 
+
+# RUN apt update && apt install -y v4l-utils \
+#   && git clone https://github.com/IntelRealSense/librealsense.git\
+#   && cd librealsense \
+#   && sed -i -e 's/con_dev -ne 0/con_dev -eq 0/' ./scripts/setup_udev_rules.sh\
+#   && ./scripts/setup_udev_rules.sh\
+#   && sed -i -e 's/con_dev -ne 0/con_dev -eq 0/' ./scripts/patch-realsense-ubuntu-lts-hwe.sh\
+#   && ./scripts/patch-realsense-ubuntu-lts-hwe.sh
+
+# RUN mkdir build && cd build\
+#   && cmake ../ -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true  -DBUILD_GRAPHICAL_EXAMPLES=false\
+#   && make uninstall && make clean && make && make install
+
+#&& apt install -y librealsense2-dkms
+
+#RUN apt install -y librealsense2-utils librealsense2-dev librealsense2-dbg
+
+
+# RUN apt update &&  apt install -y zip tar ninja-build \
+#   && git clone https://github.com/Microsoft/vcpkg.git\
+#   && cd vcpkg \
+#   && vcpkg update\
+#   && export VCPKG_FORCE_SYSTEM_BINARIES=arm\
+#   && ./bootstrap-vcpkg.sh \
+#   && ./vcpkg integrate install \
+#   && ./vcpkg install realsense2
+
+# reasense-ros
+# RUN mkdir -p ~/ros2_ws/src  && cd ~/ros2_ws/src \
+#   && git clone --depth 1 https://github.com/IntelRealSense/realsense-ros.git 
