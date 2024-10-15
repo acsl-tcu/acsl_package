@@ -1,0 +1,113 @@
+ARG BASE_IMAGE
+ARG ROS_PACKAGE
+ARG ROS_DISTRO
+ARG SEPARATE
+FROM ${BASE_IMAGE} as base
+
+############################################################################################
+
+# Install of Librealsense 
+# ARGUMENT
+# 	REALSENSE_BASE		Base image
+# 	LIBRS_VERSION	Version of librealsense to install
+# REFERENCE URL	https://github.com/IntelRealSense/librealsense/blob/master/scripts/Docker/Dockerfile
+#################################
+
+#################################
+#   Librealsense Builder Stage  #
+#################################
+# librealsense ARGUMENT
+# https://github.com/IntelRealSense/librealsense/releases
+# T265 削除前の最終版 22.04まで
+# 2.53.1 ? 2.51.1 ? 
+ARG LIBRS_VERSION="2.53.1"   
+ARG RSROS_VERSION="4.51.1"
+# T265 supportの最終版 20.04まで：warningはでるが22.04でも入る？
+#ARG LIBRS_VERSION=2.50.0 
+FROM base as librealsense-builder
+SHELL [ "/bin/bash","-c" ]
+
+# To avoid waiting for input during package installation : 非推奨
+# ENV DEBIAN_FRONTEND=noninteractive
+
+# raspberry pi では j8, jetson　では j12  = core数 x 2 が一般的だが、 raspberry pi 5ではフリーズするのでj4くらいが良い
+#  ./scripts/patch-realsense-ubuntu-lts-hwe.sh  : cmake 時に　-DFORCE_RSUSB_BACKEND=true　を追加で必要ない
+# https://github.com/IntelRealSense/realsense-ros/issues/2816
+
+
+# Download sources
+WORKDIR /usr/src
+RUN curl https://codeload.github.com/IntelRealSense/librealsense/tar.gz/refs/tags/v${LIBRS_VERSION} -o librealsense.tar.gz \
+  && tar -zxf librealsense.tar.gz \
+  && rm librealsense.tar.gz \
+  && ln -s /usr/src/librealsense-$LIBRS_VERSION /usr/src/librealsense
+
+# Build and install
+RUN cd /usr/src/librealsense \
+  && cp config/99-realsense-libusb.rules /etc/udev/rules.d/ && cp config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/ \
+  && echo 'hid_sensor_custom' > /etc/modules \
+  && mkdir build && cd build
+#  && cp config/99-realsense-libusb.rules /etc/udev/rules.d/ && cp config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/ \
+# && if (lsusb | grep Myriad | wc -l); then \
+#   && cp config/99-realsense-libusb.rules /etc/udev/rules.d/ && cp config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/ ;\
+#   && else \
+#   && echo "Remove all RealSense cameras attached. Re-run after ready" >&2 ;\
+#   && fi \
+
+RUN cd /usr/src/librealsense/build\
+  && cmake \
+  -DCMAKE_C_FLAGS_RELEASE="${CMAKE_C_FLAGS_RELEASE} -s" \
+  -DCMAKE_CXX_FLAGS_RELEASE="${CMAKE_CXX_FLAGS_RELEASE} -s" \
+  -DCMAKE_INSTALL_PREFIX=/opt/librealsense \
+  -DBUILD_PYTHON_BINDINGS:bool=true \
+  -DCMAKE_BUILD_TYPE=Release ../ \
+  -DBUILD_EXAMPLES=true \
+  -DFORCE_RSUSB_BACKEND=true \
+  -DBUILD_GRAPHICAL_EXAMPLES=OFF \
+  && make -j$(($(nproc)-1)) all \
+  && make install
+# '
+######################################
+#   librealsense Base Image Stage    #
+######################################
+FROM base as librealsense
+ARG ROS_DISTRO
+SHELL [ "/bin/bash","-c" ]
+# Copy binaries from builder stage
+COPY --from=librealsense-builder /opt/librealsense /usr/local/
+COPY --from=librealsense-builder /usr/lib/python3/dist-packages/pyrealsense2 /usr/lib/python3/dist-packages/pyrealsense2
+COPY --from=librealsense-builder /usr/src/librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/
+COPY --from=librealsense-builder /usr/src/librealsense/config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/
+ENV PYTHONPATH=$PYTHONPATH:/usr/local/lib
+
+# Shows a list of connected Realsense devices
+# CMD [ "rs-enumerate-devices", "--compact" ]
+
+###################################
+
+FROM librealsense as realsense_ros2
+ARG ROS_DISTRO
+SHELL [ "/bin/bash","-c" ]
+
+RUN mkdir -p ~/ros2_ws/src \
+  && cd ~/ros2_ws/src \
+  && git clone --depth 1 https://github.com/IntelRealSense/realsense-ros.git -b ${RSROS_VERSION}
+
+FROM realsense_ros2 as build_realsense
+ARG ROS_DISTRO
+SHELL [ "/bin/bash","-c" ]
+
+RUN cd /root/ros2_ws\
+  && source /opt/ros/${ROS_DISTRO}/setup.bash \
+  && colcon build --parallel-workers $(($(nproc)-1))  --symlink-install --packages-select realsense2_camera_msgs realsense2_camera
+
+#--cmake-clean-cache
+
+RUN cd /root/ros2_ws\
+  && source install/setup.bash \
+  && apt autoremove -y \
+  && apt-get autoremove -y \
+  && apt clean \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
