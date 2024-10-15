@@ -1,0 +1,17 @@
+
+ARG BASE_IMAGE
+ARG ROS_DISTRO
+FROM ${BASE_IMAGE} as exp
+
+SHELL [ "/bin/bash","-c" ]
+
+###################################
+# Turtlebot system
+# Checked : 2024/04/21
+###################################
+RUN wget -qO - https://raw.githubusercontent.com/turtlebot/turtlebot4_setup/humble/scripts/turtlebot4_setup.sh | bash
+# RUN mkdir -p /root/ros2_ws/src && cd /root/ros2_ws/src \
+#   && git clone --depth 1 -b ${ROS_DISTRO}-devel https://github.com/ROBOTIS-GIT/turtlebot3.git \
+#   && cd ~/ros2_ws/src/turtlebot3 \
+#   && cp ./turtlebot3_bringup/script/99-turtlebot3-cdc.rules /etc/udev/rules.d/ 
+#  && colcon build --symlink-install --packages-select turtlebot3_description turtlebot3_cartographer turtlebot3_example turtlebot3_navigation2 turtlebot3_teleop turtlebot3_node turtlebot3
