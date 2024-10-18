@@ -8,6 +8,10 @@ Each package consists following files
 
 | file name | description |
 | ---- | ---- |
-|launch_PACKAGE.sh||
+|1_ros_launcher|ros launch shell scripts exec in docker container|
+||launch_PACKAGE.sh|
+|2_ros_packages|ros package build and run in docker container|
+||PACKAGE/|
+|3_dockerfiles|dockerfile to build a docker image|
+||dockerfile.PACKAGE|
 |PACKAGE.rules| udev rule|
-|dockerfile.PACKAGE| Dockerfile to build the image|
