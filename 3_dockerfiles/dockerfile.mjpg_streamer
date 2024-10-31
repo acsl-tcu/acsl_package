@@ -1,0 +1,16 @@
+ARG BASE_IMAGE
+ARG ROS_PACKAGE
+ARG SEPARATE
+ARG ROS_DISTRO
+FROM ${BASE_IMAGE} as base
+
+SHELL [ "/bin/bash","-c" ]
+
+WORKDIR /usr/src
+
+RUN apt update \
+  && apt install -y libjpeg-dev \
+  && git clone --depth 1 https://github.com/neuralassembly/mjpg-streamer.git \
+  && cd mjpg-streamer/mjpg-streamer-experimental \
+  && make \
+  && make install
