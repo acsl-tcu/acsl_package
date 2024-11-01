@@ -8,7 +8,7 @@ Each package consists following files
 
 | file name | description |
 | ---- | ---- |
-|1_ros_launcher|ros launch shell scripts exec in docker container|
+|1_launcher|ros launch shell scripts exec in docker container|
 ||launch_PACKAGE.sh|
 |2_ros_packages|ros package build and run in docker container|
 ||PACKAGE/|
