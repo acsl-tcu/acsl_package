@@ -32,4 +32,4 @@ acsl install package_name
 acsl make_package package_name
 ```
 
-
+Then clone acsl_package using GitHub desktop and switch the branch to "package_name" you set above.
