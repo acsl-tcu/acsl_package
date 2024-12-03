@@ -2,7 +2,8 @@
 
 # launch t265
 #cd /root/ros2_ws/
-source /opt/ros/dashing/setup.bash
+source /opt/ros/humble/setup.bash
+source ./install/setup.bash
 
 #/common/scripts/set_path_in_container.sh
 HOSTNAME=$(hostname)t265_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
