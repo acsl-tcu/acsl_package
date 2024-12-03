@@ -1,5 +1,5 @@
 #!/bin/sh
-
+source /opt/ros/${ROS_DISTRO}/setup.bash
 source ~/ros2_ws/install/local_setup.bash
 HOSTNAME=$(hostname)
 #d435i起動コマンド
