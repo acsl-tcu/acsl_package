@@ -33,8 +33,8 @@ SHELL [ "/bin/bash","-c" ]
 #   && apt-get update\
 #   && apt-get install -y librealsense2-dkms librealsense2-utils librealsense2-dev librealsense2-dbg
 
-RUN apt update &&  apt install ros-humble-librealsense2*\
-  && apt install -y ros-humble-realsense2-*
+RUN apt update &&  apt install ros-${ROS_DISTRO}-librealsense2*\
+  && apt install -y ros-${ROS_DISTRO}-realsense2-*
 
 
 
