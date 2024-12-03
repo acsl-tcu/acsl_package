@@ -5,13 +5,13 @@ source ./install/setup.bash
 
 camera=$(lsusb | grep 435)
 if [[ -z $camera ]]; then
-  # launch d435 or d435i
-  HOSTNAME=$(hostname)d435_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
-  $(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=false enable_accel:=false enable_fisheye1:=false enable_fisheye2:=false initial_reset:=false camera_name:=d435 camera_namespace:=$HOSTNAME")
-else
   # launch t265
   HOSTNAME=$(hostname)t265_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
   $(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=true enable_accel:=true enable_fisheye1:=false enable_fisheye2:=false camera_name:=$HOSTNAME camera_namespace:=$HOSTNAME")
+else
+  # launch d435 or d435i
+  HOSTNAME=$(hostname)d435_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
+  $(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=false enable_accel:=false enable_fisheye1:=false enable_fisheye2:=false initial_reset:=false camera_name:=d435 camera_namespace:=$HOSTNAME")
 fi
 ## if [[ ! "${TAG}" == image_* ]]; then
 #   echo "Build first"
