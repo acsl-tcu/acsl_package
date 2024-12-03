@@ -1,4 +1,5 @@
-#! /usr/bin/bash
+#! /bin/sh
+
 # launch t265
 #cd /root/ros2_ws/
 #source install/setup.bash
