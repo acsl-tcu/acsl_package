@@ -1,20 +1,23 @@
-#! /bin/sh
+#! /usr/bin/bash
 
-# launch t265
-#cd /root/ros2_ws/
 source /opt/ros/humble/setup.bash
 source ./install/setup.bash
 
-#/common/scripts/set_path_in_container.sh
-HOSTNAME=$(hostname)t265_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
-
-#$(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=true enable_accel:=true enable_fisheye1:=false enable_fisheye2:=false camera_name:=t265 camera_namespace:=$HOSTNAME __ns:=$HOSTNAME")
-# if [[ ! "${TAG}" == image_* ]]; then
+camera=$(lsusb | grep 435)
+if [[ -z $camera ]]; then
+  # launch d435 or d435i
+  HOSTNAME=$(hostname)d435_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
+  $(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=false enable_accel:=false enable_fisheye1:=false enable_fisheye2:=false initial_reset:=false camera_name:=d435 camera_namespace:=$HOSTNAME")
+else
+  # launch t265
+  HOSTNAME=$(hostname)t265_node # realsenseのlaunch ファイルでは頭に/を付けるとエラー
+  $(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=true enable_accel:=true enable_fisheye1:=false enable_fisheye2:=false camera_name:=$HOSTNAME camera_namespace:=$HOSTNAME")
+fi
+## if [[ ! "${TAG}" == image_* ]]; then
 #   echo "Build first"
 #   bash
 # else
 #$(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=true enable_accel:=true enable_fisheye1:=false enable_fisheye2:=false initial_reset:=true camera_name:=$HOSTNAME camera_namespace:=$HOSTNAME")
-$(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=false enable_accel:=false enable_fisheye1:=false enable_fisheye2:=false initial_reset:=false camera_name:=d435 camera_namespace:=$HOSTNAME")
 # fi
 # topic名は　/Drp5_0t265/<topic_name>　のようになる。
 
