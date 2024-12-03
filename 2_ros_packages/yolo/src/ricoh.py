@@ -28,9 +28,9 @@ def yolo(publisher):
         print("カメラが正常にオープンできませんでした。")
         exit()
    
-    # model = YOLO('yolov8x-pose.pt')
-    # model = YOLO("yolov8n.pt")
-    model = YOLO("yolov8x.pt")
+    # model = YOLO('yolov11s.pt')
+    # model = YOLO("yolov11n.pt")
+    model = YOLO("yolov11n.pt")
     # classes = [62]
     classes = range(0,80)
     conf=0.3
