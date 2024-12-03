@@ -10,7 +10,7 @@ else
   echo "Bash not found in /usr/bin/bash or /bin/bash"
   exit 1
 fi
-
+source ~/ros2_ws/install/local_setup.bash
 #d435i起動コマンド
 HOSTNAME=$(hostname)
 #$(echo "exec ros2 launch realsense2_camera rs_launch.py  enable_gyro:=true camera_name:=d435 camera_namespace:=/$HOSTNAME")
