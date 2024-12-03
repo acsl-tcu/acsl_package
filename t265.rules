@@ -1,0 +1,1 @@
+KERNEL=="video*",ATTRS{idVendor}=="8086",ATTRS{idProduct}=="0b3a",  MODE="666",SYMLINK+="video_d435i"
