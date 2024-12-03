@@ -13,8 +13,9 @@ HOSTNAME=$(hostname)t265_node # realsenseのlaunch ファイルでは頭に/を�
 #   echo "Build first"
 #   bash
 # else
-# $(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=true enable_accel:=true enable_fisheye1:=false enable_fisheye2:=false initial_reset:=true camera_name:=$HOSTNAME camera_namespace:=$HOSTNAME")
+#$(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=true enable_accel:=true enable_fisheye1:=false enable_fisheye2:=false initial_reset:=true camera_name:=$HOSTNAME camera_namespace:=$HOSTNAME")
+$(echo "exec ros2 launch realsense2_camera rs_launch.py pointcloud.enable:=false enable_gyro:=false enable_accel:=false enable_fisheye1:=false enable_fisheye2:=false initial_reset:=false camera_name:=d435 camera_namespace:=$HOSTNAME")
 # fi
 # topic名は　/Drp5_0t265/<topic_name>　のようになる。
 
-$(echo "exec ros2 run realsense2_camera realsense2_camera_node --ros-args --remap __ns:=$HOSTNAME")
+#$(echo "exec ros2 run realsense2_camera realsense2_camera_node --ros-args --remap __ns:=$HOSTNAME")
