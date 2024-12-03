@@ -2,10 +2,10 @@
 
 # Check if /usr/bin/bash exists
 if [ -x "/usr/bin/bash" ]; then
-  exec /usr/bin/bash "$@"
+  exec /usr/bin/bash
 # Check if /bin/bash exists
 elif [ -x "/bin/bash" ]; then
-  exec /bin/bash "$@"
+  exec /bin/bash
 else
   echo "Bash not found in /usr/bin/bash or /bin/bash"
   exit 1
