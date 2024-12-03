@@ -17,4 +17,4 @@ HOSTNAME=$(hostname)
 # fi
 #$(echo "exec ros2 launch realsense2_camera rs_launch.py  enable_gyro:=true camera_name:=d435 camera_namespace:=/$HOSTNAME")
 #$(echo "exec ros2 run realsense_ros2_camera realsense_ros2_camera camera_namespace:=/$HOSTNAME")
-ros2 launch realsense_ros2_camera ros2_intel_realsense.launch.py camera_name:=d435 camera_namespace:=/$HOSTNAME"
+ros2 launch realsense_ros2_camera ros2_intel_realsense.launch.py enable_gyro:=true camera_name:=d435 camera_namespace:=/$HOSTNAME"
