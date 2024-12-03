@@ -13,4 +13,5 @@ fi
 
 #d435i起動コマンド
 HOSTNAME=$(hostname)
-$(echo "exec ros2 launch realsense2_camera rs_launch.py  enable_gyro:=true camera_name:=d435 camera_namespace:=/$HOSTNAME")
+#$(echo "exec ros2 launch realsense2_camera rs_launch.py  enable_gyro:=true camera_name:=d435 camera_namespace:=/$HOSTNAME")
+$(echo "exec ros2 run realsense_ros2_camera realsense_ros2_camera camera_namespace:=/$HOSTNAME")
