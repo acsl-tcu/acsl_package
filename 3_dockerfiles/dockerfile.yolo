@@ -1,0 +1,23 @@
+t=ultralytics/ultralytics:latest-arm64
+docker pull $t
+docker run --name yolo -it $t bash
+
+apt update && apt install -y \
+  python3-numpy \
+  python3-scipy \
+  python3-pandas \
+  python3-numexpr \
+  python3-matplotlib \
+  python3-serial \
+  python3-tk \
+  python3-pexpect \
+  python3-pip
+
+pip3 install -U	dumb-init \
+  && apt autoremove -y \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* 
+
+mkdir -p ~/ros2_ws/src 
+
+docker commit yolo kasekiguchi/acsl-common:yolo

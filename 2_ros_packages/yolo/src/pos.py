@@ -33,8 +33,8 @@ def yolo(publisher):
         exit()
    
     # 学習モデルの定義
-    model = YOLO('yolov8x-pose.pt') # poseモデル，xは最も重くて正確
-    # model = YOLO('yolov8s-pose.pt') # sは軽くて不正確，詳細は公式ページのモデル詳細
+    model = YOLO('yolov11x-pose.pt') # poseモデル，xは最も重くて正確
+    # model = YOLO('yolov11s-pose.pt') # sは軽くて不正確，詳細は公式ページのモデル詳細
 
     conf=0.3 # 検出確率の閾値
     max_det=5 # 最大検出数
