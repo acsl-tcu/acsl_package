@@ -15,7 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__)))  # パスの追加
 from switchbot_controller import trigger_device
 
 from rclpy.callback_groups import ReentrantCallbackGroup
-from action.action import Switchbot
+from interfaces.action import Switchbot
 
 # 最終的に開発していくバージョン
 
