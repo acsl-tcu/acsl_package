@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 import pexpect
 import sys
-from bluepy.btle import Scanner, DefaultDelegate
+# from bluepy.btle import Scanner, DefaultDelegate
 import binascii
 import copy
 from std_msgs.msg import String, Int8, Bool

@@ -1,7 +1,7 @@
 #! /bin/python3
 import rclpy
 from rclpy.node import Node
-from bluepy.btle import Scanner, DefaultDelegate
+# from bluepy.btle import Scanner, DefaultDelegate
 from rclpy.action import ActionServer, ActionClient
 from std_msgs.msg import String, Int8, Bool, Int32MultiArray
 import sys
