@@ -18,6 +18,6 @@ setup(
     license="TODO: License declaration",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["elevator_node = scr.elevator_node:main"],
+        "console_scripts": ["elevator_node = src.elevator_node:main"],
     },
 )
