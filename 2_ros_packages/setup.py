@@ -18,6 +18,6 @@ setup(
     license="TODO: License declaration",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["elevator_node = switchbot.src.elevator_node:main"],
+        "console_scripts": ["elevator_node = switchbot.elevator_node:main"],
     },
 )
