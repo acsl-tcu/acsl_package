@@ -11,7 +11,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))  # カレントディレク
 sys.path.append(os.path.join(os.path.dirname(__file__)))  # パスの追加
 # parent_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
 # sys.path.append(parent_dir)
-sys.path.append(parent_dir)
 
 from switchbot_controller import trigger_device
 
