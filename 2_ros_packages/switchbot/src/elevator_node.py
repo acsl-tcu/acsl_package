@@ -44,7 +44,7 @@ class MAIN(Node):
         self._action_server = ActionServer(
             self,
             Switchbot,
-            "/Drp4_8/elevator_node/Switchbot",
+            "~/Switchbot",
             self.elevator_callback,
             callback_group=ReentrantCallbackGroup(),
         )
