@@ -32,7 +32,7 @@ class MAIN(Node):
         self._action_server = ActionServer(
             self,
             Switchbot,
-            "~/switchbot_node/Switchbot",
+            "~/Switchbot",
             self.switchbot_callback,
         )
 
