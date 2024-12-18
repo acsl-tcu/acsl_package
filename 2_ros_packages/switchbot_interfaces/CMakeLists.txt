@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(interfaces)
+project(switchbot_interfaces)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -27,7 +27,6 @@ find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 set(action_files
-  "action/Console.action"
   "action/Switchbot.action"
 )
 
