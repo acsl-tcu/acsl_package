@@ -48,22 +48,16 @@ class MAIN(Node):
 
         result = Switchbot.Result()  # 結果メッセージの作成
 
-        if self.request == 0:
-            feedback_msg.progress = "待機"
-            goal_handle.publish_feedback(feedback_msg)
-            goal_handle.succeed()
-            result.result = feedback_msg.progress
-        else:
-            feedback_msg.progress = mac_address
-            goal_handle.publish_feedback(feedback_msg)
-            self.result = trigger_device([mac_address, "Bot", "Press"])
+        feedback_msg.progress = mac_address
+        goal_handle.publish_feedback(feedback_msg)
+        self.result = trigger_device([mac_address, "Bot", "Press"])
 
-            if self.result:
-                goal_handle.succeed()
-                result.result = "Success!"
-            else:
-                goal_handle.abort()
-                result.result = "Failure..."
+        if self.result:
+            goal_handle.succeed()
+            result.result = "Success!"
+        else:
+            goal_handle.abort()
+            result.result = "Failure..."
 
         return result
 
