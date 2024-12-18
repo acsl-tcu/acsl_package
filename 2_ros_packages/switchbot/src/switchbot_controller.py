@@ -24,10 +24,11 @@ def trigger_device(device):
 
     retry = 2  # 接続試行回数を設定
     index = 0  # 接続状態を示すインデックス
+    print('Preparing to connect...')
     while retry > 0 and 0 == index:  # 接続が成功するか、試行回数が尽きるまで繰り返す
         con = pexpect.spawn('gatttool -b ' + mac + ' -t random -I')  # gatttoolを使用してデバイスに接続するためのプロセスを開始
         con.expect('\[LE\]>')  # gatttoolの準備完了を待つ
-        print('Preparing to connect.')
+        print('Preparing to connect...')
         con.sendline('connect')  # デバイスに接続を試みる
         # 異なるBluezバージョンに対応するために複数の接続成功メッセージを待つ
         try:
