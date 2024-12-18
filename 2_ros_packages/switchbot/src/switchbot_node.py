@@ -39,8 +39,8 @@ class MAIN(Node):
     # def switchbot_callback(self):# ゴールが送信されたときに呼ばれるコールバック
     def switchbot_callback(self, goal_handle):
         self.get_logger().info("Executing goal...")
-        self.get_logger().info(mac_address)
         mac_address = goal_handle.request.mac_address
+        self.get_logger().info(mac_address)
 
         feedback_msg = Switchbot.Feedback()
         feedback_msg.progress = "swichbot startup"
