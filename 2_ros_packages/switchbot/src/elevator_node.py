@@ -6,6 +6,7 @@ from rclpy.action import ActionServer, ActionClient
 from std_msgs.msg import String, Int8, Bool, Int32MultiArray
 import sys
 import os
+import time
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))  # カレントディレクトリの移動
 sys.path.append(os.path.join(os.path.dirname(__file__)))  # パスの追加
@@ -46,7 +47,7 @@ class MAIN(Node):
             Switchbot,
             "/Drp4_8/elevator_node/Switchbot",
             self.elevator_callback,
-            callback_group=ReentrantCallbackGroup(),
+            # callback_group=ReentrantCallbackGroup(),
         )
 
     # def listener_callback(self, msg):
@@ -57,6 +58,7 @@ class MAIN(Node):
     # def elevator_callback(self):# ゴールが送信されたときに呼ばれるコールバック
     def elevator_callback(self, goal_handle):
         self.get_logger().info("Executing goal...")
+        
 
         self.request = goal_handle.request.order[0]
         self.floor = goal_handle.request.order[1]
@@ -69,6 +71,7 @@ class MAIN(Node):
         feedback_msg = Switchbot.Feedback()
         feedback_msg.progress = "swichbot startup"
         goal_handle.publish_feedback(feedback_msg)
+        print("swichbot startup")
 
         # if goal_handle.request.order == 1:
         #     result.progress = trigger_device(['e9:9b:41:91:67:dd', 'Bot', 'Press'])
@@ -217,7 +220,7 @@ class MAIN(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    # time.sleep(5.0)
+    # time.sleep(1.0)
     controller = MAIN()
 
     rclpy.spin(controller)
