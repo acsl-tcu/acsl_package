@@ -1,0 +1,14 @@
+#! /usr/bin/bash
+# usage :
+# run on SBC
+# > console
+# enter target hostname (default own SBC)
+
+if [ ${HOSTNAME:0:1} == "D" ]; then
+  cd /root/ros2_ws/
+  source install/setup.bash
+  ros2 run turtlebot3_teleop teleop_keyboard
+else
+  dup teleop
+  COMPOSE_PROJECT_NAME=teleop_${PROJECT} docker compose exec common /common/ros_launcher/console
+fi
