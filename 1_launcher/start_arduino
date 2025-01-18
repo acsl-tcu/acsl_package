@@ -1,0 +1,3 @@
+#! /usr/bin/bash
+
+dup --image=Arduino_IDE_2.3.4 arduino
