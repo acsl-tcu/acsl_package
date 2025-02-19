@@ -1,0 +1,11 @@
+ARG BASE_IMAGE
+ARG ROS_PACKAGE
+ARG SEPARATE
+ARG ROS_DISTRO
+FROM ${BASE_IMAGE} as base
+
+SHELL [ "/bin/bash","-c" ]
+
+RUN apt update && apt upgrade -y 
+
+RUN mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/src \
