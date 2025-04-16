@@ -1,0 +1,2 @@
+# KERNEL=="ttyUSB*",ATTRS{idVendor}=="056e",ATTRS{idProduct}=="5004",  MODE="666",SYMLINK+="ttyUSB-WhillCR"
+KERNEL=="ttyUSB*",ATTRS{idVendor}=="10c4",ATTRS{idProduct}=="ea60",  MODE="666",SYMLINK+="ttyUSB-UNITREE-L1"

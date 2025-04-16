@@ -1,0 +1,10 @@
+git clone https://github.com/unitreerobotics/unilidar_sdk
+cd unilidar_sdk/unitree_lidar_ros2
+colcon build --symlink-install
+
+
+
+RUN apt update && apt install -y ros-${ROS_DISTRO}-pcl-conversions \
+  libeigen3-dev \
+  ros-${ROS_DISTRO}-rviz2 \
+  libogre1.12.10 \
