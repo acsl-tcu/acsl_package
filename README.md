@@ -25,6 +25,11 @@ These packages are expected to use in the project by ["acsl"](https://github.com
 ```bash
 acsl install package_name
 ```
+### Remove a package from your project
+
+```bash
+acsl remove package_name
+```
 
 ### Create a new package
 
