@@ -1,3 +1,4 @@
+# Dockerfileではない。導入時のログ
 git clone https://github.com/unitreerobotics/unilidar_sdk
 cd unilidar_sdk/unitree_lidar_ros2
 colcon build --symlink-install
