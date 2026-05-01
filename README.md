@@ -8,11 +8,11 @@ Each package may consist of the following contents.
 
 | file name | description |
 | ---- | ---- |
-|1_launcher|launch shell scripts exec in docker container|
+|launcher|launch shell scripts exec in docker container|
 ||launch_PACKAGE.sh|
-|2_ros_packages|ros package build and run in docker container|
+|packages|ros package build and run in docker container|
 ||PACKAGE/|
-|3_dockerfiles|dockerfile to build a docker image|
+|dockerfiles|dockerfile to build a docker image|
 ||dockerfile.PACKAGE|
 |PACKAGE.rules| udev rule|
 
