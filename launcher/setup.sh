@@ -9,13 +9,13 @@ chmod +x install_pivariety_pkgs.sh
 ./install_pivariety_pkgs.sh -p libcamera_dev
 ./install_pivariety_pkgs.sh -p libcamera_apps
 
-cp -p ~/.ssh/id_* $ACSL_WORK_DIR/1_launcher
+cp -p ~/.ssh/id_* $ACSL_WORK_DIR/launcher
 cd ~/.ssh
 cat id_rsa >>authorized_keys
 
-cat "#! /usr/bin/bash" >>$ACSL_WORK_DIR/1_launcher/launch_set_ssh_key.sh
+cat "#! /usr/bin/bash" >>$ACSL_WORK_DIR/launcher/launch_set_ssh_key.sh
 
-cat "cp -p /common/ros_launcher/id_* /root/.ssh/" >>$ACSL_WORK_DIR/1_launcher/launch_set_ssh_key.sh
+cat "cp -p /common/ros_launcher/id_* /root/.ssh/" >>$ACSL_WORK_DIR/launcher/launch_set_ssh_key.sh
 
 cd $ACSL_ROS2_DIR/4_docker
 ROS_LAUNCH=set_ssh_key docker compose up

@@ -5,5 +5,5 @@ package for imx519 camera
 ## Usage
 
 ```bash
-./1_launcher/setup.sh
+./launcher/setup.sh
 ```
