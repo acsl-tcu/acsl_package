@@ -4,6 +4,17 @@
 #  $(echo "exec ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py")
 
 # https://qiita.com/miriwo/items/e829f5a78314e0878f1b
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  echo "Usage: dup velodyne <command>"
+  echo ""
+  echo "Commands:"
+  echo "  run       Launch VLP16 driver + pointcloud"
+  echo "  convert   Launch VLP16 with pointcloud conversion"
+  echo "  rviz2     Open rviz2 viewer"
+  exit 0
+fi
+
 case $1 in
 "run")
   $(echo "exec ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py  namespace:=/${HOSTNAME}")
