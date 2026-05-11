@@ -1,17 +1,22 @@
 #! /usr/bin/bash
 
-# cd /root/ros2_ws/
-#micro-ros agent 起動コマンド
-if [[ ! "${TAG}" == image_* ]]; then
-  echo "Build first"
-  bash
-else
-  echo "Confirm server IP and port"
-  IP=192.168.100.131
-  PORT=
-  $(echo "exec ros2 launch vrpn_mocap client.launch.yaml server:=$IP port:=$PORT --ros-args --remap __node:=microros_node --remap __ns:=/$HOSTNAME")
+# vrpn_mocap client launcher
+# Details : https://docs.ros.org/en/humble/p/vrpn_mocap/
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  echo "Usage: dup mocap [SERVER_IP] [PORT]"
+  echo ""
+  echo "  SERVER_IP  VRPN server IP address (default: 192.168.100.131)"
+  echo "  PORT       VRPN server port       (default: 3883)"
+  echo ""
+  echo "Topics:"
+  echo "  /vrpn_mocap/<tracker_name>/pose"
+  echo "  /vrpn_mocap/<tracker_name>/twist  (optional)"
+  echo "  /vrpn_mocap/<tracker_name>/accel  (optional)"
+  exit 0
 fi
-# Details : https://index.ros.org/r/vrpn_mocap/
-#/vrpn_mocap/<tracker_name>/pose
-#/vrpn_mocap/<tracker_name>/twist # optional when mocap reports velocity data
-#/vrpn_mocap/<tracker_name>/accel # optional when mocap reports acceleration data
+
+IP=${1:-192.168.100.131}
+PORT=${2:-3883}
+
+$(echo "exec ros2 launch vrpn_mocap client.launch.yaml server:=$IP port:=$PORT --ros-args --remap __ns:=/$HOSTNAME")

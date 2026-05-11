@@ -1,13 +1,12 @@
-
 ARG BASE_IMAGE
+ARG ROS_PACKAGE
+ARG SEPARATE
 ARG ROS_DISTRO
-FROM ${BASE_IMAGE} as exp
+FROM ${BASE_IMAGE} as base
 
 SHELL [ "/bin/bash","-c" ]
 
-RUN mkdir -p /root/ros2_ws/src && cd /root/ros2_ws/src \
-  &&  apt update \
-  &&  apt install -y ros-${ROS_DISTRO}-vrpn-mocap \
-  &&  apt autoremove -y 
-#&& git clone --depth 1 https://github.com/ros-drivers/mocap_optitrack.git  -b foxy-devel \
-#&& git clone --depth 1 https://github.com/tud-phi/ros2-mocap_optitrack.git \
+RUN apt update \
+  && apt install -y ros-${ROS_DISTRO}-vrpn-mocap \
+  && apt autoremove -y \
+  && rm -rf /var/lib/apt/lists/*
