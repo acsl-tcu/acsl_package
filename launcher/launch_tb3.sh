@@ -1,5 +1,16 @@
 #! /usr/bin/bash
 
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  echo "Usage: dup tb3 <command>"
+  echo ""
+  echo "Commands:"
+  echo "  gazebo        Launch Gazebo simulation"
+  echo "  robot         Bring up TurtleBot3 robot"
+  echo "  cartographer  Run cartographer SLAM"
+  echo "  save_map      Save current map to ~/map"
+  exit 0
+fi
+
 # https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node
 export TURTLEBOT3_MODEL=burger
 #export TURTLEBOT3_MODEL=waffle
