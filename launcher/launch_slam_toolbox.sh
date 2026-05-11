@@ -1,6 +1,17 @@
 #! /usr/bin/bash
 
 #if [[ $1 == "save_map" ]]; then
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  echo "Usage: dup slam_toolbox <command>"
+  echo ""
+  echo "Commands:"
+  echo "  slam       Online async SLAM"
+  echo "  matching   Localization (map matching)"
+  echo "  save_map   Save current map"
+  echo "  rviz2     Open rviz2 viewer"
+  exit 0
+fi
+
 source /opt/ros/${ROS_DISTRO}/setup.bash
 case $1 in
 "save_map")
