@@ -19,4 +19,4 @@ fi
 IP=${1:-192.168.100.131}
 PORT=${2:-3883}
 
-$(echo "exec ros2 launch vrpn_mocap client.launch.yaml server:=$IP port:=$PORT --ros-args --remap __ns:=/$HOSTNAME")
+$(echo "exec ros2 launch vrpn_mocap client.launch.yaml server:=$IP port:=$PORT")
