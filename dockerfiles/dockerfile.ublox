@@ -1,0 +1,20 @@
+ARG BASE_IMAGE
+ARG ROS_DISTRO
+FROM ${BASE_IMAGE}
+
+SHELL [ "/bin/bash","-c" ]
+
+# ublox RTK-GNSS driver
+# apt で入れば apt、なければソースビルド
+RUN apt-get update \
+ && (apt-get install -y --no-install-recommends ros-${ROS_DISTRO}-ublox 2>/dev/null \
+     || (echo "apt package not found, building from source..." \
+         && mkdir -p /tmp/ublox_ws/src \
+         && cd /tmp/ublox_ws/src \
+         && git clone --depth 1 https://github.com/KumarRobotics/ublox.git \
+         && cd /tmp/ublox_ws \
+         && source /opt/ros/${ROS_DISTRO}/setup.bash \
+         && colcon build --install-base /opt/ros/${ROS_DISTRO} \
+         && rm -rf /tmp/ublox_ws)) \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
